@@ -21,9 +21,9 @@ pub struct Universe {
 
 #[wasm_bindgen]
 impl Universe {
-  pub fn new() -> Universe {
-    let width = 64;
-    let height = 64;
+  pub fn new(width: Option<u32>, height: Option<u32>) -> Universe {
+    let width = width.unwrap_or(64);
+    let height = height.unwrap_or(64);
 
     let cells = (0..width * height)
       .map(|i| {

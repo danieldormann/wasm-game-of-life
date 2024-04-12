@@ -2,7 +2,7 @@ import { Universe, Cell } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
 
 const containerNode = document.getElementById('universe-container');
-const universe = Universe.new();
+const universe = Universe.new(96, 96);
 const width = universe.width();
 const height = universe.height();
 
