@@ -3,6 +3,12 @@ mod utils;
 use wasm_bindgen::prelude::*;
 use std::fmt;
 
+extern crate web_sys;
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t)* ).into());
+    }
+}
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -44,6 +50,7 @@ impl Universe {
     
   pub fn tick(&mut self) {
     let mut next = self.cells.clone();
+    let mut numCellsAlive = 0;
 
     for row in 0..self.height {
       for col in 0..self.width {
@@ -68,9 +75,16 @@ impl Universe {
           (otherwise, _) => otherwise,
         };
 
+        if next_cell == Cell::Alive {
+          numCellsAlive += 1;
+        }
+
         next[idx] = next_cell;
       }
     }
+    
+    log!("Cells alive: {}", numCellsAlive);
+
 
     self.cells = next;
   }
@@ -126,3 +140,4 @@ impl fmt::Display for Universe {
     Ok(())
   }
 }
+
