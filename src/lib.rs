@@ -79,6 +79,18 @@ impl Universe {
     self.to_string()
   }
 
+  pub fn width(&self) -> u32 {
+    self.width
+  }
+
+  pub fn height(&self) -> u32 {
+    self.height
+  }
+
+  pub fn cells(&self) -> *const Cell {
+    self.cells.as_ptr()
+  }
+
   fn get_index(&self, row: u32, column: u32) -> usize {
     (row * self.width + column) as usize
   }
@@ -105,7 +117,7 @@ impl fmt::Display for Universe {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     for line in self.cells.as_slice().chunks(self.width as usize) {
       for &cell in line {
-        let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
+        let symbol = if cell == Cell::Dead { ' ' } else { '◼' };
         write!(f, "{}", symbol)?;
       }
       write!(f, "\n")?;
